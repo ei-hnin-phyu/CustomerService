@@ -5,18 +5,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Core.Types;
 using Q2.Context;
 using Q2.Models;
+using Q2.Repositories;
 
 namespace Q2.Pages
 {
     public class DeleteModel : PageModel
     {
-        private readonly Q2.Context.CustomerServiceContext _context;
+        private readonly ICustomerProfileRepository _repository;
 
-        public DeleteModel(Q2.Context.CustomerServiceContext context)
+        public DeleteModel(ICustomerProfileRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         [BindProperty]
@@ -24,18 +26,17 @@ namespace Q2.Pages
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Customers == null)
+            if (id == null)
             {
                 return NotFound();
             }
-
-            var customer = await _context.Customers.FirstOrDefaultAsync(m => m.Id == id);
-
+            int cid = (int)id;
+            var customer = await _repository.GetCustomerProfile(cid);
             if (customer == null)
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Customer = customer;
             }
@@ -44,18 +45,12 @@ namespace Q2.Pages
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Customers == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            var customer = await _context.Customers.FindAsync(id);
-
-            if (customer != null)
-            {
-                Customer = customer;
-                _context.Customers.Remove(Customer);
-                await _context.SaveChangesAsync();
-            }
+            var cid = (int)id;
+            await _repository.DeleteCustomerProfile(cid);
 
             return RedirectToPage("./Index");
         }

@@ -8,7 +8,7 @@ namespace Q2.Repositories
     {
         public Task CreateCustomerProfile(Customer customer);
         public Task UpdateCustomerProfile(Customer customer);
-        public Task DeleteCustomerProfile();
+        public Task DeleteCustomerProfile(int id);
         public Task<Customer> GetCustomerProfile(int id);
         public Task<List<Customer>> GetAllCustomerProfiles();
     }
@@ -27,9 +27,9 @@ namespace Q2.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public Task DeleteCustomerProfile()
+        public async Task DeleteCustomerProfile(int id)
         {
-            throw new NotImplementedException();
+            await _context.Customers.Where(c => c.Id == id).ExecuteDeleteAsync(); 
         }
 
         public Task GetAllCustomerProfiles()

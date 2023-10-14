@@ -13,13 +13,11 @@ namespace Q2.Pages
 {
     public class DetailsModel : PageModel
     {
-        private readonly Q2.Context.CustomerServiceContext _context;
         private readonly ICustomerProfileRepository _repository;
 
         public DetailsModel(Q2.Context.CustomerServiceContext context,ICustomerProfileRepository repository)
         {
             _repository = repository;
-            _context = context;
         }
 
         [BindProperty]
@@ -27,7 +25,7 @@ namespace Q2.Pages
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Customers == null)
+            if (id == null)
             {
                 return NotFound();
             }
