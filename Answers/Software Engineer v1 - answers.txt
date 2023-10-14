@@ -1,0 +1,20 @@
+1. def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n - 1)
+
+2. SELECT customer_name, invoice_date, invoice_number, invoice_amount
+   FROM table_name
+   WHERE DATEPART(MONTH, invoice_date) = DATEPART(MONTH, GETDATE())
+   AND DATEPART(YEAR, invoice_date) = DATEPART(YEAR, GETDATE())
+   ORDER BY invoice_number;
+
+3. SELECT
+    MAX(CASE WHEN FieldType = 'Effective Date' THEN FieldValue END) AS "Effective Date",
+    EmployeeName AS "Employee Name",
+    MAX(CASE WHEN FieldType = 'Title' THEN FieldValue END) AS "Title",
+    MAX(CASE WHEN FieldType = 'Department' THEN FieldValue END) AS "Department"
+  FROM TableA
+  GROUP BY EmployeeName
+  ORDER BY "Effective Date" DESC;
