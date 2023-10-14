@@ -1,0 +1,112 @@
+﻿@page
+@model Q2.Pages.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Customer Profile</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.Name" class="control-label"></label>
+                <input asp-for="Input.Name" class="form-control" />
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Email" class="control-label"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Photo" class="control-label"></label>
+                <input asp-for="Input.Photo" class="form-control" type="file" />
+                <span asp-validation-for="Input.Photo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Phone" class="control-label"></label>
+                <input asp-for="Input.Phone" class="form-control" />
+                <span asp-validation-for="Input.Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Fax" class="control-label"></label>
+                <input asp-for="Input.Fax" class="form-control" />
+                <span asp-validation-for="Input.Fax" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Remarks" class="control-label"></label>
+                <input asp-for="Input.Remarks" class="form-control" />
+                <span asp-validation-for="Input.Remarks" class="text-danger"></span>
+            </div>
+            <div id="addressContainer" class="flex-column">
+                <button type="button" id="addAddressBtn" class="btn btn-success">Add Address</button>
+                <div id="addresses-div">
+                    @for (int i = 0; i < Model.Input.Addresses.Count; i++)
+                    {
+                        <div class="address">
+                            <div class="form-group">
+                                <label asp-for="Input.Addresses[i].Type">Address Type</label>
+                                <input asp-for="Input.Addresses[i].Type" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Input.Addresses[i].Address">Address</label>
+                                <input asp-for="Input.Addresses[i].Address" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Input.Addresses[i].City">City</label>
+                                <input asp-for="Input.Addresses[i].City" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Input.Addresses[i].Country">Country</label>
+                                <input asp-for="Input.Addresses[i].Country" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Input.Addresses[i].PostalCode">PostalCode</label>
+                                <input asp-for="Input.Addresses[i].PostalCode" class="form-control" />
+                            </div>
+                            <button type="button" class="btn btn-danger" id="removeAddress">Remove</button>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                 <button type="submit" class="btn btn-primary">Save Profile</button>
+            </div>
+            <div/>
+        </form>
+        <script>
+            document.getElementById("addAddressBtn").addEventListener("click", function () {
+                console.log("add")
+                var addressFields = document.querySelector(".address");
+                var newAddressFields = addressFields.cloneNode(true);
+
+                var addressIndex = document.querySelectorAll(".address").length;
+                newAddressFields.querySelectorAll("input").forEach(function (input) {
+                    input.name = input.name.replace("[0]", "[" + addressIndex + "]");
+                });
+                document.querySelector("#addresses-div").appendChild(newAddressFields);
+            });
+
+            document.getElementById("addresses-div").addEventListener("click", function (event) {
+                console.log("remove" + event.target.id)
+                if (event.target.id === "removeAddress") {
+                    event.target.closest(".address").remove();
+                }
+            });
+        </script>
+
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

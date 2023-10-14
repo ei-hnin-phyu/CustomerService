@@ -1,0 +1,81 @@
+﻿@page
+@model Q2.Pages.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Customer</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer.Photo)
+        </dt>
+        <dd class="col-sm-10">
+            <img src="data:image/jpeg;base64, @Convert.ToBase64String(Model.Customer.Photo)" alt="Customer Photo" width="100" height="100" />
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer.Phone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.Phone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer.Fax)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.Fax)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer.Remarks)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.Remarks)
+        </dd>
+        @for (int i = 0; i < Model.Customer.Addresses.Count; i++)
+        {
+            <div class="address">
+                <div class="form-group">
+                    <label asp-for="Customer.Addresses[i].Type">Address Type</label>
+                    <input asp-for="Customer.Addresses[i].Type" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Customer.Addresses[i].Address">Address</label>
+                    <input asp-for="Customer.Addresses[i].Address" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Customer.Addresses[i].City">City</label>
+                    <input asp-for="Customer.Addresses[i].City" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Customer.Addresses[i].Country">Country</label>
+                    <input asp-for="Customer.Addresses[i].Country" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Customer.Addresses[i].PostalCode">PostalCode</label>
+                    <input asp-for="Customer.Addresses[i].PostalCode" class="form-control" />
+                </div>
+                <button type="button" class="btn btn-danger" id="removeAddress">Remove</button>
+            </div>
+        }
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Customer?.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
