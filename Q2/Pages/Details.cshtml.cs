@@ -14,11 +14,11 @@ namespace Q2.Pages
     public class DetailsModel : PageModel
     {
         private readonly Q2.Context.CustomerServiceContext _context;
-        private readonly ICustomerProfileRepository _customerProfileRepository;
+        private readonly ICustomerProfileRepository _repository;
 
         public DetailsModel(Q2.Context.CustomerServiceContext context,ICustomerProfileRepository repository)
         {
-            _customerProfileRepository = repository;
+            _repository = repository;
             _context = context;
         }
 
@@ -32,7 +32,7 @@ namespace Q2.Pages
                 return NotFound();
             }
             int cid = (int)id;
-            var customer = await _customerProfileRepository.GetCustomerProfile(cid);
+            var customer = await _repository.GetCustomerProfile(cid);
             if (customer == null)
             {
                 return NotFound();

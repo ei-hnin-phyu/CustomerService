@@ -23,13 +23,7 @@
                 <label asp-for="Customer.Email" class="control-label"></label>
                 <input asp-for="Customer.Email" class="form-control" />
                 <span asp-validation-for="Customer.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <img src="data:image/jpeg;base64, @Convert.ToBase64String(Model.Customer.Photo)" alt="Customer Photo" width="80" height="200" class="form-control" />
-                <label asp-for="Customer.Photo" class="control-label"></label>
-                <input asp-for="Customer.Photo" type ="file" class="form-control" />
-                <span asp-validation-for="Customer.Photo" class="text-danger"></span>
-            </div>
+            </div>            
             <div class="form-group">
                 <label asp-for="Customer.Phone" class="control-label"></label>
                 <input asp-for="Customer.Phone" class="form-control" />
@@ -45,10 +39,98 @@
                 <input asp-for="Customer.Remarks" class="form-control" />
                 <span asp-validation-for="Customer.Remarks" class="text-danger"></span>
             </div>
+            <div id="addressContainer">
+                <button type="button" id="addAddressBtn" class="btn btn-success">Add Address</button>
+                <div id="addresses-div" class="form-group">
+                    <table>
+                        <thead >
+                            <tr>
+                                <th style="width: 20%;">
+                                    Address Type
+                                </th>
+                                <th style="width: 20%;">
+                                    Address
+                                </th>
+                                <th style="width: 20%;">
+                                    City
+                                </th>
+                                <th style="width: 20%;">
+                                    Country
+                                </th>
+                                <th style="width: 20%;">
+                                    Postal Code
+                                </th>
+                                <th style="width: 20%;">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>                            
+                            @for (int i = 0; i < Model.Customer.Addresses.Count; i++)
+                            {
+                                <tr class="address">
+                                    <td><input asp-for="Customer.Addresses[i].Type" class="form-control"/></td>
+                                    <td><input asp-for="Customer.Addresses[i].Address" class="form-control" /></td>
+                                    <td><input asp-for="Customer.Addresses[i].City" class="form-control" /></td>
+                                    <td><input asp-for="Customer.Addresses[i].Country" class="form-control" /></td>
+                                    <td><input asp-for="Customer.Addresses[i].PostalCode" class="form-control" /></td>
+                                    <td><button type="button" class="btn btn-danger remove-address">Remove</button></td>
+                                </tr>
+                            }
+                            
+                        </tbody>
+                    </table>
+                    @* @for (int i = 0; i < Model.Customer.Addresses.Count; i++)
+                    {
+                        <div class="address">
+                            <div class="form-group">
+                                <label asp-for="Customer.Addresses[i].Type">Address Type</label>
+                                <input asp-for="Customer.Addresses[i].Type" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Customer.Addresses[i].Address">Address</label>
+                                <input asp-for="Customer.Addresses[i].Address" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Customer.Addresses[i].City">City</label>
+                                <input asp-for="Customer.Addresses[i].City" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Customer.Addresses[i].Country">Country</label>
+                                <input asp-for="Customer.Addresses[i].Country" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Customer.Addresses[i].PostalCode">PostalCode</label>
+                                <input asp-for="Customer.Addresses[i].PostalCode" class="form-control" />
+                            </div>
+                        </div>
+                    } *@
+                </div>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+        <script>
+            document.getElementById("addAddressBtn").addEventListener("click", function () {
+                console.log("add")
+                var addressFields = document.querySelector(".address");
+                var newAddressFields = addressFields.cloneNode(true);
+
+                var addressIndex = document.querySelectorAll(".address").length;
+                newAddressFields.querySelectorAll("input").forEach(function (input) {
+                    input.name = input.name.replace("[0]", "[" + addressIndex + "]");
+                });
+                document.querySelector("#addresses-div").appendChild(newAddressFields);
+            });
+
+            document.getElementById("addresses-div").addEventListener("click", function (event) {
+                console.log("remove" + event.target.id)
+                if (event.target.classList.contains("remove-address")) {
+                    event.target.closest(".address").remove();
+                }
+            });
+        </script>
     </div>
 </div>
 

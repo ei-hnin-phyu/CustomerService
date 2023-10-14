@@ -27,7 +27,6 @@ namespace Q2.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Fax")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -39,11 +38,9 @@ namespace Q2.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<byte[]>("Photo")
-                        .IsRequired()
                         .HasColumnType("BLOB");
 
                     b.Property<string>("Remarks")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

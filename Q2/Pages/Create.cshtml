@@ -46,32 +46,44 @@
             <div id="addressContainer" class="flex-column">
                 <button type="button" id="addAddressBtn" class="btn btn-success">Add Address</button>
                 <div id="addresses-div">
-                    @for (int i = 0; i < Model.Input.Addresses.Count; i++)
-                    {
-                        <div class="address">
-                            <div class="form-group">
-                                <label asp-for="Input.Addresses[i].Type">Address Type</label>
-                                <input asp-for="Input.Addresses[i].Type" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Input.Addresses[i].Address">Address</label>
-                                <input asp-for="Input.Addresses[i].Address" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Input.Addresses[i].City">City</label>
-                                <input asp-for="Input.Addresses[i].City" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Input.Addresses[i].Country">Country</label>
-                                <input asp-for="Input.Addresses[i].Country" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Input.Addresses[i].PostalCode">PostalCode</label>
-                                <input asp-for="Input.Addresses[i].PostalCode" class="form-control" />
-                            </div>
-                            <button type="button" class="btn btn-danger" id="removeAddress">Remove</button>
-                        </div>
-                    }
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">
+                                    Address Type
+                                </th>
+                                <th style="width: 20%;">
+                                    Address
+                                </th>
+                                <th style="width: 20%;">
+                                    City
+                                </th>
+                                <th style="width: 20%;">
+                                    Country
+                                </th>
+                                <th style ="width: 20%;">
+                                    Postal Code
+                                </th>
+                                <th style ="width: 20%;">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.Input.Addresses.Count; i++)
+                            {
+                                <tr class="address">
+                                    <td><input asp-for="Input.Addresses[i].Type" class="form-control" /></td>
+                                    <td><input asp-for="Input.Addresses[i].Address" class="form-control" /></td>
+                                    <td><input asp-for="Input.Addresses[i].City" class="form-control" /></td>
+                                    <td><input asp-for="Input.Addresses[i].Country" class="form-control" /></td>
+                                    <td><input asp-for="Input.Addresses[i].PostalCode" class="form-control" /></td>
+                                    <td><button type="button" class="btn btn-danger remove-address">Remove</button></td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="form-group">
@@ -94,7 +106,7 @@
 
             document.getElementById("addresses-div").addEventListener("click", function (event) {
                 console.log("remove" + event.target.id)
-                if (event.target.id === "removeAddress") {
+                if (event.target.classList.contains("remove-address")) {
                     event.target.closest(".address").remove();
                 }
             });

@@ -6,9 +6,9 @@
         public string Name { get; set; }
         public string Email { get; set; }
         public List<CustomerAddress> Addresses { get; set; }
-        public byte[] Photo { get; set; }
+        public byte[]? Photo { get; set; }
         public string Phone { get; set; }
-        public string Fax { get; set; }
-        public string Remarks { get; set; }
+        public string? Fax { get; set; }
+        public string? Remarks { get; set; }
     }
 }

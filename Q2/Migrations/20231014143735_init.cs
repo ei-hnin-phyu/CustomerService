@@ -18,10 +18,10 @@ namespace Q2.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
-                    Photo = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    Photo = table.Column<byte[]>(type: "BLOB", nullable: true),
                     Phone = table.Column<string>(type: "TEXT", nullable: false),
-                    Fax = table.Column<string>(type: "TEXT", nullable: false),
-                    Remarks = table.Column<string>(type: "TEXT", nullable: false)
+                    Fax = table.Column<string>(type: "TEXT", nullable: true),
+                    Remarks = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

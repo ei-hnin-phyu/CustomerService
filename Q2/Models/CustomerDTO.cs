@@ -1,7 +1,5 @@
 ﻿using static Q2.Pages.CreateModel;
 using System.ComponentModel.DataAnnotations;
-using Q2.Migrations;
-
 namespace Q2.Models
 {
     public class CustomerDTO
@@ -16,14 +14,14 @@ namespace Q2.Models
         [Display(Name = "Phone")]
         public string Phone { get; set; }
         [Display(Name = "Photo")]
-        public IFormFile Photo { get; set; }
+        public IFormFile? Photo { get; set; }
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Fax")]
-        public string Fax { get; set; }
+        public string? Fax { get; set; }
         [DataType(DataType.Text)]
         [Display(Name = "Remarks")]
-        public string Remarks { get; set; }
+        public string? Remarks { get; set; }
         public List<AddressDTO> Addresses { get; set; } = new List<AddressDTO>();
         public async Task<Customer> convertToCustomerAsync()
         {
@@ -55,21 +53,6 @@ namespace Q2.Models
             return customer;
         }
         
-    }
-    public class CustomerExtensions
-    {
-        //public static CustomerDTO convertToCustomerDTO(Customer customer)
-        //{
-        //    return new CustomerDTO
-        //    {
-        //        Email = customer.Email,
-        //        Fax = customer.Fax,
-        //        Name = customer.Name,
-        //        Phone = customer.Phone,
-        //        Photo= customer.Photo,
-        //        Remarks = customer.Remarks,
-
-        //    }
-        //}
-    }
+    }    
+    
 }

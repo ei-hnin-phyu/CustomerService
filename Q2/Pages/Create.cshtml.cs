@@ -14,11 +14,11 @@ namespace Q2.Pages
 {
     public class CreateModel : PageModel
     {
-        private readonly ICustomerProfileRepository _customerProfileRepository;
+        private readonly ICustomerProfileRepository _repository;
 
         public CreateModel(ICustomerProfileRepository repository)
         {
-            _customerProfileRepository = repository;
+            _repository = repository;
         }
 
         public IActionResult OnGet()
@@ -41,7 +41,7 @@ namespace Q2.Pages
                 }
 
                 var customer = await Input.convertToCustomerAsync();
-                await _customerProfileRepository.CreateCustomerProfile(customer);               
+                await _repository.CreateCustomerProfile(customer);               
 
 
                 return RedirectToPage("./Index");
