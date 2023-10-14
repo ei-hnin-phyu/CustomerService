@@ -15,10 +15,11 @@ namespace Q2.Pages
     public class CreateModel : PageModel
     {
         private readonly ICustomerProfileRepository _repository;
-
-        public CreateModel(ICustomerProfileRepository repository)
+        private readonly ILogger<CreateModel> _logger;
+        public CreateModel(ICustomerProfileRepository repository, ILogger<CreateModel> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
         public IActionResult OnGet()
@@ -41,12 +42,12 @@ namespace Q2.Pages
                 }
 
                 var customer = await Input.convertToCustomerAsync();
-                await _repository.CreateCustomerProfile(customer);               
-
-
+                await _repository.CreateCustomerProfile(customer);
+                _logger.LogInformation($"Customer created");
                 return RedirectToPage("./Index");
             }catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 throw;
             }
         }

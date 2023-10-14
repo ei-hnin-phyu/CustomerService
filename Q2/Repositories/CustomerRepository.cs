@@ -32,10 +32,6 @@ namespace Q2.Repositories
             await _context.Customers.Where(c => c.Id == id).ExecuteDeleteAsync(); 
         }
 
-        public Task GetAllCustomerProfiles()
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<Customer> GetCustomerProfile(int id)
         {
@@ -63,9 +59,10 @@ namespace Q2.Repositories
             }
         }
 
-        async Task<List<Customer>> ICustomerProfileRepository.GetAllCustomerProfiles()
+        public async Task<List<Customer>> GetAllCustomerProfiles()
         {
             return await _context.Customers.ToListAsync();
         }
+
     }
 }

@@ -15,10 +15,11 @@ namespace Q2.Pages
     public class DeleteModel : PageModel
     {
         private readonly ICustomerProfileRepository _repository;
-
-        public DeleteModel(ICustomerProfileRepository repository)
+        private readonly ILogger<EditModel> _logger;
+        public DeleteModel(ICustomerProfileRepository repository, ILogger<EditModel> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -51,7 +52,7 @@ namespace Q2.Pages
             }
             var cid = (int)id;
             await _repository.DeleteCustomerProfile(cid);
-
+            _logger.LogInformation($"Customere Deleted {id}");
             return RedirectToPage("./Index");
         }
     }

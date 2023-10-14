@@ -56,6 +56,7 @@ namespace Q2.Pages
             try
             {
                 await _repository.UpdateCustomerProfile(convertToCustomer(Customer));
+                _logger.LogInformation($"Customer Edited {Customer.Id}");
             }
             catch (DbUpdateConcurrencyException e)
             {

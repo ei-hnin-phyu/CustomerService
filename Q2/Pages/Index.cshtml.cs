@@ -7,26 +7,24 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Q2.Context;
 using Q2.Models;
+using Q2.Repositories;
 
 namespace Q2.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly Q2.Context.CustomerServiceContext _context;
+        private readonly ICustomerProfileRepository _repository;
 
-        public IndexModel(Q2.Context.CustomerServiceContext context)
+        public IndexModel(ICustomerProfileRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         public IList<Customer> Customer { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Customers != null)
-            {
-                Customer = await _context.Customers.ToListAsync();
-            }
+            Customer = await _repository.GetAllCustomerProfiles();
         }
     }
 }
