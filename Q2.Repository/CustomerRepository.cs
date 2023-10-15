@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Q2.Context;
 using Q2.Models;
+using System.Data.Common;
 
-namespace Q2.Repositories
+namespace Q2.Repository
 {
     public interface ICustomerProfileRepository
     {
@@ -14,12 +14,10 @@ namespace Q2.Repositories
     }
     public class CustomerRepository : ICustomerProfileRepository
     {
-        private readonly ILogger<CustomerRepository> logger;
         private readonly CustomerServiceContext _context;
-        public CustomerRepository(CustomerServiceContext dbContext, ILogger<CustomerRepository> logger)
+        public CustomerRepository(CustomerServiceContext dbContext)
         {
             _context = dbContext;
-            this.logger = logger;
         }
         public async Task CreateCustomerProfile(Customer customer)
         {
@@ -45,22 +43,16 @@ namespace Q2.Repositories
 
         public async Task UpdateCustomerProfile(Customer customer)
         {
-            try
+            var existcustomer = await _context.Customers.Include(c => c.Addresses).Where(c => c.Id == customer.Id).FirstOrDefaultAsync();
+            if (existcustomer != null)
             {
-                var existcustomer = await _context.Customers.Include(c => c.Addresses).Where(c => c.Id == customer.Id).FirstOrDefaultAsync();
-                if (existcustomer != null)
-                {
-                    existcustomer.Name = customer.Name;
-                    existcustomer.Email = customer.Email;
-                    existcustomer.Phone = customer.Phone;
-                    existcustomer.Remarks = customer.Remarks;
-                    existcustomer.Addresses = customer.Addresses;
-                    existcustomer.Fax = customer.Fax;
-                    await _context.SaveChangesAsync();
-                }
-            }catch(Exception ex)
-            {
-                logger.LogInformation(ex.Message);
+                existcustomer.Name = customer.Name;
+                existcustomer.Email = customer.Email;
+                existcustomer.Phone = customer.Phone;
+                existcustomer.Remarks = customer.Remarks;
+                existcustomer.Addresses = customer.Addresses;
+                existcustomer.Fax = customer.Fax;
+                await _context.SaveChangesAsync();
             }
         }
 

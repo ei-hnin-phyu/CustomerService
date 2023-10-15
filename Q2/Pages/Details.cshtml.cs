@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Q2.Context;
+
 using Q2.Models;
-using Q2.Repositories;
+using Q2.Repository;
 
 namespace Q2.Pages
 {
@@ -15,7 +15,7 @@ namespace Q2.Pages
     {
         private readonly ICustomerProfileRepository _repository;
 
-        public DetailsModel(Q2.Context.CustomerServiceContext context,ICustomerProfileRepository repository)
+        public DetailsModel(ICustomerProfileRepository repository)
         {
             _repository = repository;
         }

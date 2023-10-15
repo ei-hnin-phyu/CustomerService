@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Q2.Context;
-using Q2.Repositories;
+using Q2.Models;
+using Q2.Repository;
 using Serilog;
 using Serilog.Events;
 
@@ -8,8 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-string connectionString = builder.Configuration.GetConnectionString("SQLiteConnection") ??
-    throw new InvalidOperationException("Connection string 'SQLiteConnection' not found.");
+string path =Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).FullName, builder.Configuration.GetConnectionString("SqliteDb"));
+string connectionString = $"Data Source={path}";
 builder.Services.AddDbContext<CustomerServiceContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddScoped<ICustomerProfileRepository, CustomerRepository>();

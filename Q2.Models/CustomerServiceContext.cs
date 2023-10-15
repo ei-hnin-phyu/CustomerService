@@ -1,10 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using Q2.Models;
+using System.Collections.Generic;
+using System.Reflection.Emit;
 
-namespace Q2.Context
+namespace Q2.Models
 {
     public class CustomerServiceContext : DbContext
     {
+        
         public CustomerServiceContext(DbContextOptions<CustomerServiceContext> options) : base(options)
         {
         }
@@ -13,7 +17,8 @@ namespace Q2.Context
         public DbSet<CustomerAddress> CustomerAddresses { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=customermanager.db");
+            
+            optionsBuilder.UseSqlite($"Data Source={Constants.path}");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,5 +31,20 @@ namespace Q2.Context
                 .WithOne(c => c.Customer)
                 .HasForeignKey(c => c.CustomerId);
         }
+    }
+
+    public class DbContextFactory : IDesignTimeDbContextFactory<CustomerServiceContext>
+    {
+        public CustomerServiceContext CreateDbContext(string[] args)
+        {            
+            var optionsBuilder = new DbContextOptionsBuilder<CustomerServiceContext>();
+            optionsBuilder.UseSqlite($"Data Source={Constants.path}");
+
+            return new CustomerServiceContext(optionsBuilder.Options);
+        }
+    }
+    public static class Constants
+    {
+        public static string path = Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).FullName, "customerprofile.db");
     }
 }

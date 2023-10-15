@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Q2.Context;
+
 using Q2.Models;
-using Q2.Repositories;
+using Q2.Repository;
 
 namespace Q2.Pages
 {
