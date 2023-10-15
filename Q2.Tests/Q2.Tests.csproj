@@ -23,4 +23,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Q2.Models\Q2.Models.csproj" />
+    <ProjectReference Include="..\Q2.Repository\Q2.Repository.csproj" />
+  </ItemGroup>
+
 </Project>
