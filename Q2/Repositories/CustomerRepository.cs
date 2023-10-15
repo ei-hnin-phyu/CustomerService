@@ -29,7 +29,12 @@ namespace Q2.Repositories
 
         public async Task DeleteCustomerProfile(int id)
         {
-            await _context.Customers.Where(c => c.Id == id).ExecuteDeleteAsync(); 
+            var customer = await _context.Customers.Where(c => c.Id == id).FirstOrDefaultAsync();
+            if (customer != null)
+            {
+                _context.Customers.Remove(customer);
+                await _context.SaveChangesAsync();
+            }
         }
 
 
